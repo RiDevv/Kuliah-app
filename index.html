@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuliah App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- View: Home — daftar mata kuliah -->
+    <div id="view-home" class="view">
+      <header class="header">
+        <h1 class="header__title">Mata Kuliah</h1>
+      </header>
+      <div class="view__content" id="home-content"></div>
+    </div>
+
+    <!-- View: Mata Kuliah — detail + tab bar -->
+    <div id="view-mata-kuliah" class="view hidden">
+      <header class="header">
+        <button class="btn btn--icon" id="mk-back-btn" aria-label="Kembali">&#8592;</button>
+        <h2 class="header__title" id="mk-title"></h2>
+      </header>
+      <div class="tab-bar">
+        <button class="tab-btn tab-btn--active" id="tab-tugas">Tugas</button>
+        <button class="tab-btn" id="tab-catatan">Catatan</button>
+      </div>
+      <div class="view__content" id="mk-content"></div>
+    </div>
+
+    <!-- View: Pertemuan Tugas — daftar tugas per pertemuan -->
+    <div id="view-pertemuan-tugas" class="view hidden">
+      <header class="header">
+        <button class="btn btn--icon" id="ptm-tugas-back-btn" aria-label="Kembali">&#8592;</button>
+        <h2 class="header__title" id="ptm-tugas-title"></h2>
+      </header>
+      <div class="view__content" id="ptm-tugas-content"></div>
+    </div>
+
+    <!-- View: Pertemuan Catatan — textarea catatan per pertemuan -->
+    <div id="view-pertemuan-catatan" class="view hidden">
+      <header class="header">
+        <button class="btn btn--icon" id="ptm-catatan-back-btn" aria-label="Kembali">&#8592;</button>
+        <h2 class="header__title" id="ptm-catatan-title"></h2>
+      </header>
+      <div class="view__content" id="ptm-catatan-content"></div>
+    </div>
+
+    <!-- View: Tugas Akhir — checklist + catatan tugas akhir -->
+    <div id="view-tugas-akhir" class="view hidden">
+      <header class="header">
+        <button class="btn btn--icon" id="ta-back-btn" aria-label="Kembali">&#8592;</button>
+        <h2 class="header__title" id="ta-title"></h2>
+      </header>
+      <div class="view__content" id="ta-content"></div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+/* ===== Color Palette ===== */
+:root {
+  --color-bg:           #0f172a;
+  --color-surface:      #1e293b;
+  --color-surface-elevated: #334155;
+  --color-primary:      #6366f1;
+  --color-amber:        #f59e0b;
+  --color-urgent:       #ef4444;
+  --color-active:       #22c55e;
+  --color-text:         #f1f5f9;
+  --color-text-muted:   #94a3b8;
+
+  --radius-card:  12px;
+  --padding-base: 16px;
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ===== Layout ===== */
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+.view {
+  padding: var(--padding-base);
+}
+
+.view.hidden {
+  display: none;
+}
+
+.view__content {
+  margin-top: var(--padding-base);
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--padding-base) 0 0;
+}
+
+.header__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Card ===== */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--padding-base);
+  margin-bottom: 10px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card--amber {
+  border: 2px solid var(--color-amber);
+  background-color: var(--color-surface);
+}
+
+.card--elevated {
+  background-color: var(--color-surface-elevated);
+}
+
+/* ===== Button ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.75;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn--danger {
+  background-color: transparent;
+  color: var(--color-urgent);
+  padding: 4px 8px;
+}
+
+.btn--icon {
+  background-color: transparent;
+  color: var(--color-text);
+  font-size: 1.2rem;
+  padding: 4px 8px;
+}
+
+/* ===== Input ===== */
+.input {
+  width: 100%;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.input-row .input {
+  flex: 1;
+}
+
+/* ===== Indicator ===== */
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.indicator--urgent {
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  background-color: var(--color-urgent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 1px 5px;
+}
+
+.indicator--active {
+  background-color: var(--color-active);
+}
+
+.indicator--clear {
+  background-color: var(--color-urgent);
+}
+
+/* ===== Tab Bar ===== */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.tab-btn--active {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ===== List Item ===== */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px var(--padding-base);
+  background-color: var(--color-surface);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.list-item__label {
+  flex: 1;
+  font-size: 0.95rem;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.list-item__chevron {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* ===== Checkbox ===== */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ===== Textarea ===== */
+.textarea {
+  width: 100%;
+  min-height: 200px;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.catatan-textarea {
+  min-height: 60vh;
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 40px var(--padding-base);
+  font-size: 0.95rem;
+}
+
+/* ===== Tugas Akhir Card ===== */
+.tugas-akhir-card {
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: opacity 0.15s;
+}
+
+.tugas-akhir-card:active {
+  opacity: 0.75;
+}
+
+.tugas-akhir-card__inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tugas-akhir-card__icon {
+  font-size: 1.4rem;
+  color: var(--color-amber);
+  flex-shrink: 0;
+}
+
+.tugas-akhir-card__label {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-amber);
+}
+
+/* ===== Text utilities ===== */
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.text-amber {
+  color: var(--color-amber);
+}
+
+.text-strike {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* ===== Tugas Akhir Sections ===== */
+.ta-section {
+  margin-bottom: 24px;
+}
+
+.ta-section__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-amber);
+  margin-bottom: 12px;
+}
