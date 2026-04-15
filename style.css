@@ -342,3 +342,31 @@ body {
   color: var(--color-amber);
   margin-bottom: 12px;
 }
+
+/* ===== Tugas Catatan Textarea ===== */
+.tugas-catatan-textarea {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  background: #334155;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.tugas-catatan-textarea::placeholder {
+  color: #64748b;
+}
+
+.tugas-catatan-textarea:focus {
+  border-color: #6366f1;
+}

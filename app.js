@@ -2,10 +2,29 @@
 
 const STORAGE_KEY = 'kuliah_app_data';
 
+function _migrateCatatanTugas(data) {
+  let changed = false;
+  (data.mataKuliah || []).forEach(mk => {
+    (mk.pertemuan || []).forEach(ptm => {
+      (ptm.tugas || []).forEach(t => {
+        if (t.catatan === undefined) {
+          t.catatan = '';
+          changed = true;
+        }
+      });
+    });
+  });
+  if (changed) saveData(data);
+  return data;
+}
+
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return _migrateCatatanTugas(parsed);
+    }
   } catch (e) {
     // localStorage unavailable or parse error — fall through to empty data
   }
@@ -337,12 +356,19 @@ function renderPertemuanTugas(mkId, ptmId) {
       const tenggatHtml = t.tenggat
         ? `<span class="text-muted" style="margin-left:8px;">${formatTenggat(t.tenggat)}</span>`
         : '';
+      const escapedCatatan = t.catatan ? t.catatan.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
       html += `
         <div class="card card-header" data-tugas-id="${t.id}">
           <input class="checkbox" type="checkbox" data-tugas-id="${t.id}" ${t.selesai ? 'checked' : ''} aria-label="Tandai selesai" />
           <span class="list-item__label${strikeClass}">${t.deskripsi}${tenggatHtml}</span>
           <button class="btn btn--danger tugas-delete-btn" data-tugas-id="${t.id}" aria-label="Hapus tugas">&#10005;</button>
         </div>
+        <textarea
+          class="textarea tugas-catatan-textarea"
+          data-tugas-id="${t.id}"
+          placeholder="Tambahkan catatan..."
+          aria-label="Catatan untuk tugas: ${t.deskripsi}"
+        >${escapedCatatan}</textarea>
       `;
     });
   }
@@ -380,6 +406,17 @@ function renderPertemuanTugas(mkId, ptmId) {
       deleteTugas(mkId, ptmId, btn.dataset.tugasId);
     }
   });
+
+  // Wire up auto-save catatan tugas via event delegation
+  const debouncedSaveCatatanTugas = debounce((tugasId, text) => {
+    saveCatatanTugas(mkId, ptmId, tugasId, text);
+  }, 500);
+
+  content.addEventListener('input', (e) => {
+    if (e.target.classList.contains('tugas-catatan-textarea')) {
+      debouncedSaveCatatanTugas(e.target.dataset.tugasId, e.target.value);
+    }
+  });
 }
 
 function addTugas(mkId, ptmId, deskripsi, tenggat) {
@@ -396,6 +433,7 @@ function addTugas(mkId, ptmId, deskripsi, tenggat) {
     deskripsi: trimmed,
     selesai: false,
     tenggat: tenggat || null,
+    catatan: '',
   };
 
   ptm.tugas.push(tugas);
@@ -455,6 +493,18 @@ function renderPertemuanCatatan(mkId, ptmId) {
   const textarea = document.getElementById('catatan-textarea');
   const debouncedSave = debounce((text) => saveCatatan(mkId, ptmId, text), 500);
   textarea.addEventListener('input', (e) => debouncedSave(e.target.value));
+}
+
+function saveCatatanTugas(mkId, ptmId, tugasId, text) {
+  const mk = state.data.mataKuliah.find(m => m.id === mkId);
+  if (!mk) return;
+  const ptm = mk.pertemuan.find(p => p.id === ptmId);
+  if (!ptm) return;
+  const tugas = ptm.tugas.find(t => t.id === tugasId);
+  if (!tugas) return;
+
+  tugas.catatan = text;
+  saveData(state.data);
 }
 
 function saveCatatan(mkId, ptmId, text) {
