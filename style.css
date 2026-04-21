@@ -322,6 +322,14 @@ body {
   font-size: 0.85rem;
 }
 
+.tenggat-label {
+  margin-left: 8px;
+}
+
+.tenggat-row {
+  margin-bottom: 16px;
+}
+
 .text-amber {
   color: var(--color-amber);
 }
